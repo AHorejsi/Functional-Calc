@@ -14,7 +14,7 @@ module Vector (
     vdistv
 ) where
 
-data Vector a = Vector { pos :: [a] } deriving (Show, Eq)
+newtype Vector a = Vector { pos :: [a] } deriving (Show, Eq)
 
 dimensionsv :: (Num a) => Vector a -> Int
 dimensionsv (Vector pos) = length pos
