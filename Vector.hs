@@ -14,7 +14,15 @@ module Vector (
     vdistv
 ) where
 
-newtype Vector a = Vector { pos :: [a] } deriving (Show, Eq)
+newtype Vector a = Vector { pos :: [a] } deriving (Eq)
+
+instance (Show a) => Show (Vector a) where
+    show (Vector pos) = "<" ++ (_showVec pos) ++ ">"
+
+_showVec :: (Show a) => [a] -> String
+_showVec [] = ""
+_showVec [value] = show value
+_showVec (value:values) = (show value) ++ ", " ++ (_showVec values)
 
 dimensionsv :: (Num a) => Vector a -> Int
 dimensionsv (Vector pos) = length pos
@@ -71,5 +79,5 @@ anglev left right
 
 vdistv :: (Floating a) => Vector a -> Vector a -> a
 vdistv left right
-    | dimensionsv left /= dimensionsv right = error "Vectors must be of equal dimensions" 
+    | dimensionsv left /= dimensionsv right = error "Vectors must be of equal dimensions"
     | otherwise = sqrt $ sum $ map (**2) (pos $ vminusv left right)
